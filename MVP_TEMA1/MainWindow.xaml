@@ -1,0 +1,381 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVP_TEMA1"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="MVP_TEMA1.MainWindow"
+        mc:Ignorable="d" Height="600" Width="1000" Background="#444452" Title="{Binding MyTitle}" Icon="icons/Notebook.png" Closing="Window_Closing">
+    <Window.Resources>
+        <SolidColorBrush x:Key="ToolBarHorizontalBackground" Color="#FFEEF5FD"/>
+        <SolidColorBrush x:Key="ToolBarToggleButtonVerticalBackground" Color="#FFEEF5FD"/>
+        <SolidColorBrush x:Key="ToolBarButtonHover" Color="#210080FF"/>
+        <SolidColorBrush x:Key="ToolBarGripper" Color="#FF6D6D6D"/>
+        <Style x:Key="ToolBarVerticalOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Background" Value="{StaticResource ToolBarToggleButtonVerticalBackground}"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="0,0,3,3" SnapsToDevicePixels="true">
+                            <Canvas HorizontalAlignment="Right" Height="6" Margin="2,7,2,2" SnapsToDevicePixels="true" VerticalAlignment="Bottom" Width="7">
+                                <Path Data="M 1.5 1 L 1.5 6" Stroke="White"/>
+                                <Path Data="M 0.5 0 L 0.5 5" Stroke="{TemplateBinding Foreground}"/>
+                                <Path Data="M 3.5 0.5 L 7 3.5 L 4 6.5 Z" Fill="White"/>
+                                <Path Data="M 3 -0.5 L 6 2.5 L 3 5.5 Z" Fill="{TemplateBinding Foreground}"/>
+                            </Canvas>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource ToolBarGripper}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="ToolBarVerticalBackground" Color="#FFEEF5FD"/>
+        <SolidColorBrush x:Key="ToolBarToggleButtonHorizontalBackground" Color="#FFEEF5FD"/>
+        <Style x:Key="ToolBarHorizontalOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Background" Value="{StaticResource ToolBarToggleButtonHorizontalBackground}"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="0,3,3,0" SnapsToDevicePixels="true">
+                            <Canvas HorizontalAlignment="Right" Height="7" Margin="7,2,2,2" SnapsToDevicePixels="true" VerticalAlignment="Bottom" Width="6">
+                                <Path Data="M 1 1.5 L 6 1.5" Stroke="White"/>
+                                <Path Data="M 0 0.5 L 5 0.5" Stroke="{TemplateBinding Foreground}"/>
+                                <Path Data="M 0.5 4 L 6.5 4 L 3.5 7 Z" Fill="White"/>
+                                <Path Data="M -0.5 3 L 5.5 3 L 2.5 6 Z" Fill="{TemplateBinding Foreground}"/>
+                            </Canvas>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource ToolBarGripper}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <SolidColorBrush x:Key="ToolBarMenuBorder" Color="#FFB6BDC5"/>
+        <SolidColorBrush x:Key="ToolBarSubMenuBackground" Color="#FFEEF5FD"/>
+        <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="Transparent" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <DrawingBrush TileMode="Tile" Viewbox="0,0,4,4" Viewport="0,0,4,4" ViewportUnits="Absolute" ViewboxUnits="Absolute">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="White" Geometry="M 1 1 L 1 3 L 3 3 L 3 1 z"/>
+                                                <GeometryDrawing Brush="{StaticResource ToolBarGripper}" Geometry="M 0 0 L 0 2 L 2 2 L 2 0 z"/>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="SizeAll"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ToolBarMainPanelBorderStyle" TargetType="{x:Type Border}">
+            <Setter Property="Margin" Value="0,0,11,0"/>
+            <Setter Property="CornerRadius" Value="0,0,0,0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+                    <Setter Property="CornerRadius" Value="0,0,0,0"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ToolBarStyle1" TargetType="{x:Type ToolBar}">
+            <Setter Property="Background" Value="{StaticResource ToolBarHorizontalBackground}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToolBar}">
+                        <Grid x:Name="Grid" Margin="3,1,1,1" SnapsToDevicePixels="true">
+                            <Grid x:Name="OverflowGrid" HorizontalAlignment="Right" Visibility="Hidden">
+                                <ToggleButton x:Name="OverflowButton" ClickMode="Press" FocusVisualStyle="{x:Null}" IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding HasOverflowItems}" Style="{StaticResource ToolBarHorizontalOverflowButtonStyle}"/>
+                                <Popup x:Name="OverflowPopup" AllowsTransparency="true" Focusable="false" IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom" StaysOpen="false">
+                                    <Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">
+                                        <Border x:Name="ToolBarSubMenuBorder" BorderBrush="{StaticResource ToolBarMenuBorder}" BorderThickness="1" Background="{StaticResource ToolBarSubMenuBackground}" RenderOptions.ClearTypeHint="Enabled">
+                                            <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel" KeyboardNavigation.DirectionalNavigation="Cycle" FocusVisualStyle="{x:Null}" Focusable="true" Margin="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle" WrapWidth="200"/>
+                                        </Border>
+                                    </Themes:SystemDropShadowChrome>
+                                </Popup>
+                            </Grid>
+                            <Border x:Name="MainPanelBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" Style="{StaticResource ToolBarMainPanelBorderStyle}">
+                                <DockPanel KeyboardNavigation.TabIndex="1" KeyboardNavigation.TabNavigation="Local">
+                                    <Thumb x:Name="ToolBarThumb" Margin="-3,-1,0,0" Padding="6,5,1,6" Style="{StaticResource ToolBarThumbStyle}" Width="10" Visibility="Hidden"/>
+                                    <ContentPresenter x:Name="ToolBarHeader" ContentSource="Header" HorizontalAlignment="Center" Margin="4,0,4,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                                    <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="true" Margin="0,1,2,2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsOverflowOpen" Value="true">
+                                <Setter Property="IsEnabled" TargetName="ToolBarThumb" Value="false"/>
+                            </Trigger>
+                            <Trigger Property="Header" Value="{x:Null}">
+                                <Setter Property="Visibility" TargetName="ToolBarHeader" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="ToolBarTray.IsLocked" Value="true">
+                                <Setter Property="Visibility" TargetName="ToolBarThumb" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="HasDropShadow" SourceName="OverflowPopup" Value="true">
+                                <Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
+                                <Setter Property="SnapsToDevicePixels" TargetName="Shdw" Value="true"/>
+                                <Setter Property="Color" TargetName="Shdw" Value="#71000000"/>
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Margin" TargetName="Grid" Value="1,3,1,1"/>
+                                <Setter Property="Style" TargetName="OverflowButton" Value="{StaticResource ToolBarVerticalOverflowButtonStyle}"/>
+                                <Setter Property="Height" TargetName="ToolBarThumb" Value="10"/>
+                                <Setter Property="Width" TargetName="ToolBarThumb" Value="Auto"/>
+                                <Setter Property="Margin" TargetName="ToolBarThumb" Value="-1,-3,0,0"/>
+                                <Setter Property="Padding" TargetName="ToolBarThumb" Value="5,6,6,1"/>
+                                <Setter Property="Margin" TargetName="ToolBarHeader" Value="0,0,0,4"/>
+                                <Setter Property="Margin" TargetName="PART_ToolBarPanel" Value="1,0,2,2"/>
+                                <Setter Property="DockPanel.Dock" TargetName="ToolBarThumb" Value="Top"/>
+                                <Setter Property="DockPanel.Dock" TargetName="ToolBarHeader" Value="Top"/>
+                                <Setter Property="HorizontalAlignment" TargetName="OverflowGrid" Value="Stretch"/>
+                                <Setter Property="VerticalAlignment" TargetName="OverflowGrid" Value="Bottom"/>
+                                <Setter Property="Placement" TargetName="OverflowPopup" Value="Right"/>
+                                <Setter Property="Margin" TargetName="MainPanelBorder" Value="0,0,0,11"/>
+                                <Setter Property="Background" Value="{StaticResource ToolBarVerticalBackground}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainVM/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl"
+                    Key="N"
+                    Command="{Binding NewCommand}"/>
+        <KeyBinding Modifiers="Ctrl"
+                    Key="S"
+                    Command="{Binding SaveCommand}"/>
+        <KeyBinding Modifiers="Ctrl"
+                    Key="O"
+                    Command="{Binding OpenCommand}"/>
+        <KeyBinding Modifiers="Ctrl+Shift"                    
+                    Key="S"
+                    Command="{Binding SaveAllCommand}"/>
+        <KeyBinding Modifiers="Ctrl"
+                    Key="W"
+                    Command="{Binding CloseCommand}"/>
+        <KeyBinding Modifiers="Ctrl+Shift"
+                    Key="W"
+                    Command="{Binding CloseAllCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="F"
+                    Command="{Binding FindCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="H"
+                    Command="{Binding ReplaceCommand}" />
+    </Window.InputBindings>
+    <Grid>
+        <!--<TextBox Name="content_box"
+                 Text="{Binding ContentText}"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 Height="Auto" 
+                 Width="Auto" 
+                 TextWrapping="NoWrap" 
+                 AcceptsReturn="True" 
+                 AcceptsTab="True" 
+                 VerticalScrollBarVisibility="Auto" 
+                 HorizontalScrollBarVisibility="Auto"                  
+                 Background="#333339"
+                 Foreground="White"
+                 FontSize="15"
+                 FontFamily="Courier New"
+                 BorderThickness="0"
+                 Margin="40,22,0,0"/>-->
+        <Menu VerticalAlignment="Top" Background="#9999AA" Foreground="Black" FontFamily="Verdana" Height="25">
+            <MenuItem Header="File" Height="26" Width="40">
+                <MenuItem x:Name="new_item" Header="New" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding NewCommand}" BorderThickness="0"/>
+                <MenuItem x:Name="open_item" Header="Open" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding OpenCommand}" BorderThickness="0, 0, 0, 1"/>
+                <MenuItem x:Name="save_item" Header="Save" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding SaveCommand}" BorderThickness="0"/>
+                <MenuItem x:Name="save_as_item" Header="Save As..." Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding SaveAsCommand}" BorderThickness="0"/>
+                <MenuItem x:Name="save_all_item" Header="Save All" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding SaveAllCommand}" BorderThickness="0, 0, 0, 1"/>
+                <MenuItem x:Name="close_item" Header="Close" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding CloseCommand}" BorderThickness="0"/>
+                <MenuItem x:Name="close_all_item" Header="Close All" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding CloseAllCommand}" BorderThickness="0"/>
+            </MenuItem>
+            <!--<MenuItem Header="Edit">
+                <MenuItem x:Name="copy_item" Header="Copy" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding CopyCommand}"/>
+                <MenuItem x:Name="paste_item" Header="Paste" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding PasteCommand}"/>
+            </MenuItem>-->
+            <MenuItem Header="Search">
+                <MenuItem x:Name="find_item" Header="Find..." Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding FindCommand}" BorderThickness="0"/>
+                <MenuItem x:Name="find_all_item" Header="Find in all files" Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding FindAllCommand}" BorderThickness="0,0,0,1"/>
+                <MenuItem x:Name="replace_item" Header="Replace..." Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding ReplaceCommand}" BorderThickness="0"/>
+                <MenuItem x:Name="replace_all_item" Header="Replace All..." Background="Gray" Foreground="Black" FontFamily="Verdana" Command="{Binding ReplaceAllCommand}" BorderThickness="0"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Background="Gray" Foreground="Black" FontFamily="Verdana" BorderThickness="0" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
+        <!-- <TextBlock x:Name="line_count_block"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Stretch"
+                 Height="Auto" 
+                 Margin="0,48,0,0" 
+                 TextWrapping="Wrap" 
+                 Width="40"
+                 FontFamily="Courier New"
+                 FontSize="16"
+                 Background="Transparent"
+                 Foreground="LightGray"><Run Text="1"/><LineBreak/><Run Text="2"/><LineBreak/><Run Text="3"/><LineBreak/><Run Text="4"/><LineBreak/><Run Text="5"/><LineBreak/><Run Text="6"/><LineBreak/><Run/></TextBlock> -->
+        <TabControl ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" Margin="35,48,0,0"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 Height="Auto" 
+                 Width="Auto"                                    
+                 Background="#333339"
+                 Foreground="White"
+                 FontSize="15"
+                 FontFamily="Courier New"
+                 BorderThickness="0"
+                 BorderBrush="Transparent">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="0" Color="Black" BlurRadius="3"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Grid>
+                                    <ContentPresenter x:Name="TabItemContent" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,12,2" RecognizesAccessKey="True" Height="20"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Panel.ZIndex" Value="100" />
+                                        <Setter Property="TextElement.Foreground" TargetName="TabItemContent" Value="Cyan"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="TextElement.Foreground" Value="White" />
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="True">
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+        </TabControl>
+        <ToolBarPanel>
+            <ToolBar Margin="33,24,-12,51" Background="#777788" Style="{DynamicResource ToolBarStyle1}" Width="Auto" HorizontalAlignment="Stretch" Height="27" RenderTransformOrigin="0.5,0.103">
+                <Button Name="new_button" Command="{Binding NewCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="New (Ctrl+N)">
+                    <Image Source="icons/AddDocument.png" Height="17"/>
+                </Button>
+                <Button Name="open_button" Command="{Binding OpenCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Open (Ctrl+O)">
+                    <Image Source="icons/OpenFile.png" Height="17"/>
+                </Button>
+                <Button Name="save_button" Command="{Binding SaveCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Save (Ctrl+S)">
+                    <Image Source="icons/Save.png" Height="17"/>
+                </Button>
+                <Button Name="save_n_close_button" Command="{Binding SaveCloseCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Save And Close">
+                    <Image Source="icons/SaveAndClose.png" Height="17"/>
+                </Button>
+                <Button Name="save_all_button" Command="{Binding SaveAllCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Save All (Ctrl+Shift+S)">
+                    <Image Source="icons/SaveAll.png" Height="17"/>
+                </Button>
+                <Button Name="save_as_button" Command="{Binding SaveAsCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Save As">
+                    <Image Source="icons/SaveAs.png" Height="17"/>
+                </Button>
+                <Button Name="close_button" Command="{Binding CloseCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Close (Ctrl+W)">
+                    <Image Source="icons/Close.png" Height="17"/>
+                </Button>
+                <Button Name="close_all_button" Command="{Binding CloseAllCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Close All (Ctrl+Shift+W)">
+                    <Image Source="icons/CloseAll.png" Height="17"/>
+                </Button>
+                <Button Name="find_button" Command="{Binding FindCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Find in current file (Ctrl+F)">
+                    <Image Source="icons/Search.png" Height="17"/>
+                </Button>
+                <Button Name="find_in_all_button" Command="{Binding FindAllCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Find in all files">
+                    <Image Source="icons/FindInFile.png" Height="17"/>
+                </Button>
+                <Button Name="replace_button" Command="{Binding ReplaceCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Replace (Ctrl+H)">
+                    <Image Source="icons/Replace.png" Height="17"/>
+                </Button>
+                <Button Name="replace_all_button" Command="{Binding ReplaceAllCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="Replace All">
+                    <Image Source="icons/ReplaceAll.png" Height="17"/>
+                </Button>
+                <Button Name="about_button" Command="{Binding AboutCommand}" ToolTipService.InitialShowDelay="300" ToolTipService.ShowDuration="2000" ToolTipService.BetweenShowDelay="1000" ToolTip="About">
+                    <Image Source="icons/About.png" Height="17"/>
+                </Button>
+            </ToolBar>
+        </ToolBarPanel>
+        <Expander Name ="directory_view" HorizontalAlignment="Left" ExpandDirection="Right" VerticalAlignment="Center" Width="400" Height="Auto">
+            <TreeView Name="treeView" Margin="0,-261,0,-286" Width="366" BorderThickness="0" Height="536">                
+                <TreeView.Resources>
+                    <Style TargetType="TreeView">
+                        <Setter Property="Background" Value="#444452"/>
+                    </Style>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="Foreground" Value="#BBBBCC"/>
+                        <EventSetter Event="MouseDoubleClick" Handler="treeView_MouseDoubleClick"/>
+                    </Style>
+                </TreeView.Resources>
+            </TreeView>
+        </Expander>
+    </Grid>
+</Window>
