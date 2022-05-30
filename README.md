@@ -1,7 +1,7 @@
 # Notepad-
 Notepad++ application made with C# WPF.
 
-All functionalities shown in the GIF are fully working.
+All functionalities shown in the GIF (and more!) are fully working.
 
 
 Screenshots:
