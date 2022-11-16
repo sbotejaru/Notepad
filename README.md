@@ -1,4 +1,4 @@
-# Notepad-
+# ++Notepad
 Notepad++ application made with C# WPF 
 
 Screenshot:
